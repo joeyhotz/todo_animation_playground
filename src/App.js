@@ -4,7 +4,7 @@ import { todoData } from "./data/todoData.js";
 import { Todo } from "./components/Todo";
 import { TodoForm } from "./components/TodoForm";
 
-function App() {
+export function App() {
   const [todos, setTodos] = useState(todoData);
 
   const addTodo = text => {
@@ -41,5 +41,3 @@ function App() {
     </div>
   );
 }
-
-export default App;
