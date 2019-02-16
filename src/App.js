@@ -29,6 +29,7 @@ function TodoText({ index, todo, toggleState }) {
 
   return (
     <animated.span
+      className="todo-text"
       onClick={() => {
         toggleState(index);
       }}
@@ -45,8 +46,6 @@ function TodoTick({ isCompleted }) {
     to: { width: isCompleted ? 14 : 0, opacity: isCompleted ? 1 : 0 },
     config: config.gentle
   });
-
-  console.log(isCompleted);
 
   return (
     <animated.div
@@ -65,6 +64,7 @@ function TodoRemoveButton({ index, removeTodo }) {
 
   return (
     <animated.button
+      className="todo-remove-button"
       style={{ ...slideOpenProps, float: "right", zIndex: "100" }}
       onClick={() => {
         removeTodo(index);
