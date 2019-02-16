@@ -3,36 +3,53 @@ import "./App.css";
 import { tododata } from "./tododata";
 import { useSpring, animated } from "react-spring";
 
-function Todo({ todo, index, toggleState, removeTodo }) {
-  const squeezeInProps = useSpring({
-    height: 20,
-    from: { height: 0 }
-  });
+const slideOpen = {
+  height: 20,
+  from: { height: 0 }
+};
 
-  const fadeInProps = useSpring({
-    opacity: 1,
-    from: { opacity: 0 }
-  });
+const fadeIn = {
+  opacity: 1,
+  from: { opacity: 0 }
+};
+
+function Todo({ todo, index, toggleState, removeTodo }) {
+  const slideOpenProps = useSpring(slideOpen);
 
   return (
-    <animated.div style={squeezeInProps} className="todo">
-      <animated.span
-        onClick={() => {
-          toggleState(index);
-        }}
-        style={{ ...fadeInProps, width: "100%" }}
-      >
-        {todo.isCompleted ? "✓ " : ""} {todo.text}
-      </animated.span>
-      <button
-        style={{ float: "right", zIndex: "100" }}
-        onClick={() => {
-          removeTodo(index);
-        }}
-      >
-        x
-      </button>
+    <animated.div style={slideOpenProps} className="todo">
+      <TodoText index={index} todo={todo} toggleState={toggleState} />
+      <TodoRemoveButton index={index} removeTodo={removeTodo} />
     </animated.div>
+  );
+}
+
+function TodoText({ index, todo, toggleState }) {
+  const fadeInProps = useSpring(fadeIn);
+
+  return (
+    <animated.span
+      onClick={() => {
+        toggleState(index);
+      }}
+      style={{ ...fadeInProps, width: "100%" }}
+    >
+      {todo.isCompleted ? "✓ " : ""} {todo.text}
+    </animated.span>
+  );
+}
+function TodoRemoveButton({ index, removeTodo }) {
+  const slideOpenProps = useSpring(slideOpen);
+
+  return (
+    <animated.button
+      style={{ ...slideOpenProps, float: "right", zIndex: "100" }}
+      onClick={() => {
+        removeTodo(index);
+      }}
+    >
+      x
+    </animated.button>
   );
 }
 
