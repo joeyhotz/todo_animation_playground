@@ -1,4 +1,4 @@
-export const tododata = [
+export const todoData = [
   {
     text: "buy perfume",
     isCompleted: true
