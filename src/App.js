@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import "./App.css";
 import { tododata } from "./tododata";
-import { useSpring, animated } from "react-spring";
+import { useSpring, animated, config } from "react-spring";
 
 const slideOpen = {
   height: 20,
@@ -14,7 +14,7 @@ const fadeIn = {
 };
 
 function Todo({ todo, index, toggleState, removeTodo }) {
-  const slideOpenProps = useSpring(slideOpen);
+  const slideOpenProps = useSpring({ ...slideOpen, config: config.gentle });
 
   return (
     <animated.div style={slideOpenProps} className="todo">
@@ -25,7 +25,7 @@ function Todo({ todo, index, toggleState, removeTodo }) {
 }
 
 function TodoText({ index, todo, toggleState }) {
-  const fadeInProps = useSpring(fadeIn);
+  const fadeInProps = useSpring({ ...fadeIn, config: config.gentle });
 
   return (
     <animated.span
@@ -34,12 +34,30 @@ function TodoText({ index, todo, toggleState }) {
       }}
       style={{ ...fadeInProps, width: "100%" }}
     >
-      {todo.isCompleted ? "✓ " : ""} {todo.text}
+      {todo.isCompleted ? <TodoTick /> : ""}
+      {todo.text}
     </animated.span>
   );
 }
+
+function TodoTick() {
+  const slideOpenSidewardsProps = useSpring({
+    to: { width: 14, opacity: 1 },
+    from: { width: 0, opacity: 0 },
+    config: config.gentle
+  });
+
+  return (
+    <animated.div
+      style={{ ...slideOpenSidewardsProps, display: "inline-block" }}
+    >
+      ✓
+    </animated.div>
+  );
+}
+
 function TodoRemoveButton({ index, removeTodo }) {
-  const slideOpenProps = useSpring(slideOpen);
+  const slideOpenProps = useSpring(fadeIn);
 
   return (
     <animated.button
