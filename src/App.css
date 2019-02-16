@@ -22,3 +22,11 @@
   align-items: center;
   justify-content: space-between;
 }
+
+.todo-text {
+  cursor: pointer;
+}
+
+.todo-remove-button {
+  cursor: pointer;
+}
