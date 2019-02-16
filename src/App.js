@@ -34,22 +34,26 @@ function TodoText({ index, todo, toggleState }) {
       }}
       style={{ ...fadeInProps, width: "100%" }}
     >
-      {todo.isCompleted ? <TodoTick /> : ""}
+      <TodoTick isCompleted={todo.isCompleted} />
       {todo.text}
     </animated.span>
   );
 }
 
-function TodoTick() {
-  const slideOpenSidewardsProps = useSpring({
-    to: { width: 14, opacity: 1 },
-    from: { width: 0, opacity: 0 },
+function TodoTick({ isCompleted }) {
+  const slideClosedProps = useSpring({
+    to: { width: isCompleted ? 14 : 0, opacity: isCompleted ? 1 : 0 },
     config: config.gentle
   });
 
+  console.log(isCompleted);
+
   return (
     <animated.div
-      style={{ ...slideOpenSidewardsProps, display: "inline-block" }}
+      style={{
+        ...slideClosedProps,
+        display: "inline-block"
+      }}
     >
       ✓
     </animated.div>
